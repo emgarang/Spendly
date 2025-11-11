@@ -1,47 +1,119 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg+xml" href="spendly_logo.svg">
-    <title>SpendChart</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="spendly_logo.svg">
+  <title>SpendChart</title>
 </head>
 
 <body>
-    <header class="logo-and-title">
-        <img src="spendchart_logo.svg" alt="SpendChart Logo">
-        <h1>SpendChart</h1>
-    </header>
-    <main>
-        <section class="introduction">
-            <h2>Welcome to SpendChart!</h2>
-            <p>Your personal expense tracker to help you manage your finances effectively.</p>
-        </section>
+  <header class="logo-and-title">
+    <img src="spendchart_logo.svg" alt="SpendChart Logo">
+    <h1>SpendChart</h1>
+  </header>
 
-        <section class="features">
-            <h2>Features</h2>
-            <div class="feature-cards">
-                <div class="card">
-                    <h3>Monthly Budget</h3>
-                    <p>$0.00</p>
-                </div>
-            <div class="card">
-                    <h3>Total Expenses</h3>
-                    <p>$0.00</p>
-                </div>
-                <div class="card">
-                    <h3>Remaining Balance</h3>
-                    <p>$0.00</p>
-                </div>
-            <div class="card">
-                    <h3>Savings</h3>
-                    <p>$0.00</p>
-                </div>
-            </div>
-        </section>
-    </main>
+  <main>
+    <section class="introduction">
+      <h2>Welcome to SpendChart!</h2>
+      <p>Your personal expense tracker to help you manage your finances effectively.</p>
+    </section>
 
-    <script></script>
+    <section class="features">
+      <h2>Features</h2>
+      <div class="feature-cards">
+        <div class="card">
+          <h3>Monthly Budget</h3>
+          <p id="budget">$0.00</p>
+          <button class="update-btn" data-type="budget">Add+</button>
+
+          <table class="expense-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Expense ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Groceries</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Entertainment</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Food</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Skincare</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Giving</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Housing</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Utilities</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Transportation</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Insurance</td><td><input type="number" min="0" step="0.01"></td></tr>
+              <tr><td>Others</td><td><input type="number" min="0" step="0.01"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Total Expenses</h3>
+          <p id="expenses">$0.00</p>
+        </div>
+
+        <div class="card">
+          <h3>Remaining Balance</h3>
+          <p id="balance">$0.00</p>
+        </div>
+
+        <div class="card">
+          <h3>Savings</h3>
+          <p id="savings">$0.00</p>
+          <button class="update-btn" data-type="savings">Add+</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Function to format currency
+    function formatCurrency(value) {
+      return `$${parseFloat(value).toFixed(2)}`;
+    }
+
+    // Update button handlers
+    document.querySelectorAll('.update-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const type = button.dataset.type;
+        const value = prompt(`Enter new value for ${type.replace('-', ' ')}:`);
+
+        if (value !== null && !isNaN(value)) {
+          document.getElementById(type).textContent = formatCurrency(value);
+          updateBalance();
+        }
+      });
+    });
+
+    // Real-time total expense calculation
+    const expenseInputs = document.querySelectorAll('.expense-table input');
+
+    expenseInputs.forEach(input => {
+      input.addEventListener('input', updateExpenses);
+    });
+
+    function updateExpenses() {
+      let total = 0;
+      expenseInputs.forEach(input => {
+        const val = parseFloat(input.value);
+        if (!isNaN(val)) total += val;
+      });
+
+      document.getElementById('expenses').textContent = formatCurrency(total);
+      updateBalance();
+    }
+
+    function updateBalance() {
+      const budget = parseFloat(document.getElementById('budget').textContent.replace('$', '')) || 0;
+      const expenses = parseFloat(document.getElementById('expenses').textContent.replace('$', '')) || 0;
+      const savings = parseFloat(document.getElementById('savings').textContent.replace('$', '')) || 0;
+
+      const balance = budget - expenses - savings;
+      document.getElementById('balance').textContent = formatCurrency(balance);
+    }
+  </script>
 </body>
 </html>

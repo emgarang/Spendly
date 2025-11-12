@@ -12,15 +12,15 @@ description:
 
  Create test_file.py with Selenium tests
 
-    ✅ Added pytest and selenium dependencies to requirements.txt
-    ✅ Created comprehensive test suite with 9 test cases
-    ✅ Tests load HTML file
-    ✅ Tests fill input fields (Rent, Groceries, etc.)
-    ✅ Tests simulate clicks on "Add+" buttons
-    ✅ Tests verify totals and balances update correctly
+    Add pytest and selenium dependencies to requirements.txt
+    Creat comprehensive test suite with 9 test cases
+    Tests load HTML file
+    Tests fill input fields (Rent, Groceries, etc.)
+    Tests simulate clicks on "Add+" buttons
+    Tests verify totals and balances update correctly
 
 Format code with linters (black for Python, prettier for JS/HTML)
-Run and validate all tests (9/9 PASSED ✅)
+Run and validate all tests
 Code review completed
-Security check with CodeQL (0 vulnerabilities found)
+Security check with CodeQL
 Add .gitignore for Python cache files

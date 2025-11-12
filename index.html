@@ -73,51 +73,6 @@
     </section>
   </main>
 
-  <script>
-    // Function to format currency
-    function formatCurrency(value) {
-      return `$${parseFloat(value).toFixed(2)}`;
-    }
-
-    // Update button handlers
-    document.querySelectorAll('.update-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const type = button.dataset.type;
-        const value = prompt(`Enter new value for ${type.replace('-', ' ')}:`);
-
-        if (value !== null && !isNaN(value)) {
-          document.getElementById(type).textContent = formatCurrency(value);
-          updateBalance();
-        }
-      });
-    });
-
-    // Real-time total expense calculation
-    const expenseInputs = document.querySelectorAll('.expense-table input');
-
-    expenseInputs.forEach(input => {
-      input.addEventListener('input', updateExpenses);
-    });
-
-    function updateExpenses() {
-      let total = 0;
-      expenseInputs.forEach(input => {
-        const val = parseFloat(input.value);
-        if (!isNaN(val)) total += val;
-      });
-
-      document.getElementById('expenses').textContent = formatCurrency(total);
-      updateBalance();
-    }
-
-    function updateBalance() {
-      const budget = parseFloat(document.getElementById('budget').textContent.replace('$', '')) || 0;
-      const expenses = parseFloat(document.getElementById('expenses').textContent.replace('$', '')) || 0;
-      const savings = parseFloat(document.getElementById('savings').textContent.replace('$', '')) || 0;
-
-      const balance = budget - expenses - savings;
-      document.getElementById('balance').textContent = formatCurrency(balance);
-    }
-  </script>
+  <script></script>
 </body>
 </html>
